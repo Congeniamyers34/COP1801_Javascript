@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fictional Dogs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #dogInfo, #dogGreeting {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fictional Dogs</h1>
+    <button onclick="selectAndDisplayDog()">Select and Display Dog</button>
+    <div id="dogInfo"></div>
+    <div id="dogGreeting"></div>
+
+    <script>
+        /**
+         * Constructor function for Dog
+         * @param {string} name - The name of the dog
+         * @param {string} breed - The breed of the dog
+         * @param {boolean} canTalk - Whether the dog can talk
+         */
+        function Dog(name, breed, canTalk) {
+            this.name = name;
+            this.breed = breed;
+            this.canTalk = canTalk;
+
+            // Method to display greeting and talking capability
+            this.myGreeting = function() {
+                if (this.canTalk) {
+                    return `${this.name} says: "I can talk!"`;
+                } else {
+                    return `${this.name} says: "I cannot talk."`;
+                }
+            };
+        }
+
+        // Creating two dog objects
+        var snoopy = new Dog("Snoopy", "Beagle", false);
+        var scoobyDoo = new Dog("Scooby-Doo", "Great Dane", true);
+
+        // Function to display properties of a dog
+        function displayDogInfo(dog) {
+            let info = "";
+            for (let property in dog) {
+                if (dog.hasOwnProperty(property) && typeof dog[property] !== 'function') {
+                    info += `${property}: ${dog[property]}<br>`;
+                }
+            }
+            return info;
+        }
+
+        // Function to handle user input and display dog information
+        function selectAndDisplayDog() {
+            let dogName = prompt("Enter the name of the dog (Snoopy or Scooby-Doo):");
+            let selectedDog;
+
+            switch(dogName) {
+                case "Snoopy":
+                    selectedDog = snoopy;
+                    break;
+                case "Scooby-Doo":
+                    selectedDog = scoobyDoo;
+                    break;
+                default:
+                    alert("The dog you selected doesn't exist.");
+                    return;
+            }
+
+            // Display dog information in the HTML
+            document.getElementById("dogInfo").innerHTML = displayDogInfo(selectedDog);
+            document.getElementById("dogGreeting").innerHTML = selectedDog.myGreeting();
+        }
+    </script>
+</body>
+</html>
